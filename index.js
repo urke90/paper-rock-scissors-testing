@@ -12,3 +12,20 @@ function getComputerChoice() {
     return 'scissors';
   }
 }
+
+function getHumanChoice() {
+  const userInput = prompt('Choose between paper, rock and scissors');
+
+  if (
+    userInput !== 'paper' &&
+    userInput !== 'rock' &&
+    userInput !== 'scissors'
+  ) {
+    alert('Invalid input');
+    getHumanChoice();
+  }
+
+  return userInput;
+}
+
+getHumanChoice();
