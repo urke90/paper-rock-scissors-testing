@@ -1,6 +1,7 @@
 const computerDisplayedScore = document.querySelector('#computer-score');
 const playerDisplayedScore = document.querySelector('#player-score');
 const roundWinnerDisplay = document.querySelector('#round-winner');
+const gameWinnerDisplay = document.querySelector('#game-winner');
 
 function getComputerChoice() {
   const choice = Math.floor(Math.random() * 3);
@@ -30,8 +31,6 @@ function getHumanChoice() {
 }
 
 function playGame() {
-  const roundsToPlay = 5;
-
   let humanScore = 0;
   let computerScore = 0;
 
@@ -40,10 +39,17 @@ function playGame() {
     .addEventListener('click', playRound);
 
   function playRound(e) {
-    console.log('e', e);
-
     const humanChoice = e.target.dataset.value;
     const computerChoice = getComputerChoice();
+
+    if (humanScore === 5 || computerScore === 5) {
+      if (computerScore === 5) {
+        gameWinnerDisplay.textContent = `Computer has won ${computerScore}:${humanScore}`;
+      } else {
+        gameWinnerDisplay.textContent = `You have won ${humanScore}:${computerScore}`;
+      }
+      return;
+    }
 
     if (humanChoice === 'paper') {
       if (computerChoice === 'scissors') {
@@ -53,7 +59,6 @@ function playGame() {
       } else if (computerChoice === 'paper') {
         roundWinnerDisplay.textContent = 'Tied';
       } else {
-        // console.log('You won, Paper beats Rock');
         humanScore++;
         playerDisplayedScore.textContent = humanScore;
         roundWinnerDisplay.textContent = 'You won, Paper, beats Rock';
@@ -62,7 +67,6 @@ function playGame() {
 
     if (humanChoice === 'rock') {
       if (computerChoice === 'scissors') {
-        // console.log('You won, Rock beats Scissors');
         humanScore++;
         playerDisplayedScore.textContent = humanScore;
       } else if (computerChoice === 'paper') {
@@ -89,20 +93,6 @@ function playGame() {
       }
     }
   }
-
-  // for (let i = 0; i < roundsToPlay; i++) {
-  //   playRound();
-
-  //   if (i === roundsToPlay - 1) {
-  //     if (computerScore > humanScore) {
-  //       console.log(`Computer has won ${computerScore}:${humanScore}`);
-  //     } else if (computerScore === humanScore) {
-  //       console.log(`Game is tied: ${computerScore}:${humanScore}`);
-  //     } else {
-  //       console.log(`You have won ${humanScore}:${computerScore}`);
-  //     }
-  //   }
-  // }
 }
 
 playGame();
